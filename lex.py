@@ -3,7 +3,7 @@ import sys
 
 
 class Lexer:
-    def __init__(self, input):
+    def __init__(self, input: str):
         # Source code to lex as a string. Append a newline to simplify lexing/parsing the last token/statement.
         self.source = input + "\n"
         # Added myself so we don't need to keep calling len() all the time.
@@ -121,7 +121,7 @@ class Lexer:
             token = Token(token_text, TokenType.NUMBER)
         elif self.current_char.isalpha():
             # Leading character is a letter, so this must be an identifier or a keyword.
-            # Get all consecutive alpha numberic characters.
+            # Get all consecutive alpha numeric characters.
             starting_position = self.current_position
             while self.peek().isalnum():
                 self.next_char()
@@ -156,14 +156,14 @@ class Lexer:
 
 class Token:
     # Contains the original text and the types of token
-    def __init__(self, text, kind):
+    def __init__(self, text: str, kind):
         # The token's actual text. Used for identifiers, strings, and numbers.
         self.text = text
         # The TokenType that this token is classified as.
         self.kind = kind
 
     @staticmethod
-    def check_if_keyword(text):
+    def check_if_keyword(text: str):
         for kind in TokenType:
             # Relies on all keyword enum values being 1XX.
             # if kind.name == text and kind.value >= 100 and kind.value < 200:
