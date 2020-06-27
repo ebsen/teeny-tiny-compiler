@@ -1,0 +1,11 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+[Makefile]
+indent_style = tab
+
+[*.tiny]
+indent_size = 4
+
+[*.py]
+indent_style = space
+indent_size = 4
