@@ -47,10 +47,10 @@ class Lexer:
         # Return the next token.
         self.skip_whitespace()
         self.skip_comment()
-        token = None
 
         # Check the first character of this token to see if we can decide what it is.
         # If it is a multiple character operator (e.g., `!=`), number, identifier, or keyword, then we process the rest.
+        token = None
         if self.current_char == "+":
             token = Token(self.current_char, TokenType.PLUS)
         elif self.current_char == "-":
