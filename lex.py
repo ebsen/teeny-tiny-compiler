@@ -154,24 +154,6 @@ class Lexer:
         return token
 
 
-class Token:
-    # Contains the original text and the types of token
-    def __init__(self, text: str, kind):
-        # The token's actual text. Used for identifiers, strings, and numbers.
-        self.text = text
-        # The TokenType that this token is classified as.
-        self.kind = kind
-
-    @staticmethod
-    def check_if_keyword(text: str):
-        for kind in TokenType:
-            # Relies on all keyword enum values being 1XX.
-            # if kind.name == text and kind.value >= 100 and kind.value < 200:
-            if kind.name == text and (100 <= kind.value < 200):
-                return kind
-        return None
-
-
 class TokenType(enum.Enum):
     EOF = -1
     NEWLINE = 0
@@ -202,3 +184,21 @@ class TokenType(enum.Enum):
     LTEQ = 209
     GT = 210
     GTEQ = 211
+
+
+class Token:
+    # Contains the original text and the types of token
+    def __init__(self, text: str, kind: TokenType):
+        # The token's actual text. Used for identifiers, strings, and numbers.
+        self.text = text
+        # The TokenType that this token is classified as.
+        self.kind = kind
+
+    @staticmethod
+    def check_if_keyword(text: str):
+        for kind in TokenType:
+            # Relies on all keyword enum values being 1XX.
+            # if kind.name == text and kind.value >= 100 and kind.value < 200:
+            if kind.name == text and (100 <= kind.value < 200):
+                return kind
+        return None
