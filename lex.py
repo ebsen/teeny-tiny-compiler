@@ -22,7 +22,7 @@ class Lexer:
         else:
             self.current_char = self.source[self.current_position]
 
-    def peek(self):
+    def peek(self) -> str:
         # Return the lookahead character.
         if self.current_position + 1 >= self.len:
             return "\0"
@@ -43,7 +43,7 @@ class Lexer:
             while self.current_char != "\n":
                 self.next_char()
 
-    def get_token(self):
+    def get_token(self) -> 'Token':
         # Return the next token.
         self.skip_whitespace()
         self.skip_comment()
