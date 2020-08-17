@@ -4,4 +4,4 @@ Following along with [this fella](http://web.eecs.utk.edu/~azh/blog/teenytinycom
 
 1. The [lexer](http://web.eecs.utk.edu/~azh/blog/teenytinycompiler1.html), the which breaks the input code up into small pieces called tokens
 2. The [parser](http://web.eecs.utk.edu/~azh/blog/teenytinycompiler2.html), which verifies that the tokens are in an order that our language allows
-3. The emitter, which produces the appropriate C code
+3. The [emitter](http://web.eecs.utk.edu/~azh/blog/teenytinycompiler3.html), which produces the appropriate C code and writes it to a file
