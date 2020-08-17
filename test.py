@@ -1,11 +1,11 @@
 import unittest
-from typing import List, Optional
+import subprocess
+from typing import List
 
-from lex import Lexer, Token, TokenType
-from parse import Parser
+from lex import Lexer, TokenType
 
 
-class TestSuite(unittest.TestCase):
+class TestLexer(unittest.TestCase):
     """ Tests
         Occasionally throughout the compiler tutorial, the author includes
         changes to `main.py` to verify the changes made in the last
@@ -13,7 +13,7 @@ class TestSuite(unittest.TestCase):
         functionality of the compiler, these make obvious use-case for tests.
     """
 
-    def lex_harness(self, input: str) -> List[TokenType]:
+    def harness(self, input: str) -> List[TokenType]:
         """ Harness
             The lexer accepts a string of source code as input
             and finds the individual pieces (called tokens)
@@ -31,7 +31,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_tokens(self):
         input = "LET foobar = 123"
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.LET,
                 TokenType.IDENT,
@@ -44,7 +44,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_whitespace(self):
         input = "+- */"
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.PLUS,
                 TokenType.MINUS,
@@ -57,7 +57,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_multicharacter_tokens(self):
         input = "+- */ >>= = !="
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.PLUS,
                 TokenType.MINUS,
@@ -74,7 +74,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_comments(self):
         input = "+- # This is a comment!\n */"
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.PLUS,
                 TokenType.MINUS,
@@ -88,7 +88,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_comments_and_strings(self):
         input = '+- "This is a string" # This is a comment!\n */'
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.PLUS,
                 TokenType.MINUS,
@@ -103,7 +103,7 @@ class TestSuite(unittest.TestCase):
     def test_lexing_numbers(self):
         input = "+-123 9.8654*/"
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.PLUS,
                 TokenType.MINUS,
@@ -118,7 +118,7 @@ class TestSuite(unittest.TestCase):
     def lest_lexing_keywords(self):
         input = "IF+-123 foo*THEN/"
         self.assertEqual(
-            self.lex_harness(input),
+            self.harness(input),
             [
                 TokenType.IF,
                 TokenType.PLUS,
@@ -131,6 +131,33 @@ class TestSuite(unittest.TestCase):
                 TokenType.NEWLINE,
             ],
         )
+
+
+class TestEmitter(unittest.TestCase):
+    """ Testing the Emitter
+    """
+
+    def harness(self, name: str):
+        tiny = f"{name}.tiny"
+        c = f"{name}.c"
+        subprocess.run(["python3", "main.py", tiny])
+        with open("out.c", "r") as resulting_file:
+            output = resulting_file.read()
+        with open(c, "r") as reference_file:
+            reference = reference_file.read()
+        return output, reference
+
+    def test_statements(self):
+        input_file, output_file = self.harness("statements")
+        self.assertEqual(input_file, output_file)
+
+    def test_fibonacci(self):
+        input_file, output_file = self.harness("fibonacci")
+        self.assertEqual(input_file, output_file)
+
+    def test_average(self):
+        input_file, output_file = self.harness("average")
+        self.assertEqual(input_file, output_file)
 
 
 if __name__ == "__main__":
