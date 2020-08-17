@@ -138,8 +138,8 @@ class TestEmitter(unittest.TestCase):
     """
 
     def harness(self, name: str):
-        tiny = f"{name}.tiny"
-        c = f"{name}.c"
+        tiny = f"tiny/{name}.tiny"
+        c = f"reference/{name}.c"
         subprocess.run(["python3", "main.py", tiny])
         with open("out.c", "r") as resulting_file:
             output = resulting_file.read()
