@@ -6,8 +6,6 @@ from parse import Parser
 
 
 def main():
-    print("Teeny Tiny Compiler")
-
     if len(sys.argv) != 2:
         sys.exit("Error: Compiler needs source file as argument.")
     with open(sys.argv[1], "r") as input_file:
@@ -20,7 +18,6 @@ def main():
 
     parser.program()  # Start the parser.
     emitter.write()  # Write the output to file.
-    print("Compiling complete.")
 
 
 if __name__ == "__main__":
