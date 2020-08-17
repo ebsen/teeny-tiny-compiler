@@ -16,16 +16,9 @@ class Emitter:
         # Add a fragment of C code that ends a line
         self.code += code + "\n"
 
-    # def emit(self, code: str, newline: bool = True):
-        # Add a fragment of C code, with or without a newline
-        # self.code + "\n" if newline else self.code
-        # self.code += code + "\n" if newline else 
-
     def header_line(self, code) -> None:
         # Add a line of C code to the top of the C code file
         self.header += code + "\n"
-    # def headerLine(self, code):
-    #     self.header += code + '\n'
 
     def write(self) -> None:
         # Write out the resulting C code to a file
